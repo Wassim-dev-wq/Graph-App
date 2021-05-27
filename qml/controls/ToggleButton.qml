@@ -7,9 +7,9 @@ Button{
 
     // property
     property url btnIconSource: "../../images/svg_images/menu_icon.svg"
-    property color btnColorDefault: "#354052"
-    property color btnColorMouseOver: "#47bac1"
-    property color btnColorMouseClicked: "#82ECF3"
+    property color btnColorDefault: "#ffffff"
+    property color btnColorMouseOver: "#a5cae2"
+    property color btnColorMouseClicked: "#387ead"
 
     QtObject{
         id: internal
@@ -39,7 +39,7 @@ Button{
         ColorOverlay {
             anchors.fill: iconBtn
             source: iconBtn
-            color: "#ffffff"
+            color: "#898d8f"
             antialiasing: false
         }
     }

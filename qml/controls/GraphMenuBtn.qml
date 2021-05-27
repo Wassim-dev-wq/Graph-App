@@ -3,28 +3,34 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
 Button{
-    id : btnLeftMenu
-    text: qsTr('Left Menu Text')
+    id : btnGraphMenu
+    text: qsTr('Graph Menu Text')
 
     // property
-    property url btnIconSource: "../../images/svg_images/home_icon.svg"
+    property url btnIconSource: "../../images/svg_images/right_icon.svg"
     property color btnColorDefault: "#ffffff"
-    property color btnColorMouseOver: "#a5cae2"
-    property color btnColorMouseClicked: "#387ead"
-    property int iconWidth: 18
-    property int iconHeight: 18
-    property color activeMenuColorLeft: "#2d8ecd"
- //   property color activeMenuColorRight: "#64e241"
+    property color btnColorMouseOver: "#47bac1"
+    property color btnColorMouseClicked: "#6CDFC2"
+    property color activeMenuColorRight: "#D4D9DC"
+    property color activeMenuColorLeft: "#87C1E3"
+    property color textColorHover: "#ffffff"
+    property color textColorDefault: "#898d8f"
     property bool isActiveMenu: false
+    property int iconWidth: 17
+    property int iconHeight: 17
 
     QtObject{
         id: internal
-        property var dynamicColor: if(btnLeftMenu.down){
-                                       btnLeftMenu.down ? btnColorMouseClicked : btnColorDefault
+        property var dynamicColor: if(btnGraphMenu.down){
+                                       btnGraphMenu.down ? btnColorMouseClicked : btnColorDefault
                                    }else {
-                                       btnLeftMenu.hovered ? btnColorMouseOver : btnColorDefault
+                                       btnGraphMenu.hovered ? btnColorMouseOver : btnColorDefault
                                    }
-
+        property var dynamicColorText: if(btnGraphMenu.down){
+                                       btnGraphMenu.down ? textColorHover : textColorDefault
+                                   }else {
+                                       btnGraphMenu.hovered ? textColorHover : textColorDefault
+                                   }    
     }
 
 
@@ -39,20 +45,9 @@ Button{
                 left: parent.left
                 bottom: parent.bottom
             }
-            width: 3
-            visible: isActiveMenu
+            width: 1
             color: activeMenuColorLeft
         }
-        // Rectangle{
-        //     anchors{
-        //         top: parent.top
-        //         right: parent.right
-        //         bottom: parent.bottom
-        //     }
-        //     width: 3
-        //     visible: isActiveMenu
-        //     color: activeMenuColorRight
-        // }
        }
     contentItem: Item {
         anchors.fill: parent
@@ -60,15 +55,15 @@ Button{
         Image {
             id: iconBtn
             source: btnIconSource
-            anchors.leftMargin: 26
-            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: 14
             sourceSize.width: iconWidth
             sourceSize.height: iconHeight
             width: iconWidth
             height: iconHeight
             anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
-            visible: false
+            visible: true
             antialiasing: true
         }
         ColorOverlay {
@@ -81,12 +76,12 @@ Button{
             width: iconWidth
         }
         Text {
-            color: "#898d8f"
-            text: btnLeftMenu.text
-            font: btnLeftMenu.font
+            color: internal.dynamicColorText
+            text: btnGraphMenu.text
+            font: btnGraphMenu.font
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 75
+            anchors.leftMargin: 12
         }
     }
 

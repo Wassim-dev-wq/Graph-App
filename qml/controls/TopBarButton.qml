@@ -6,10 +6,10 @@ Button{
     id : btnTopBar
 
     // property
-    property url btnIconSource: "../../images/svg_images/minimize_icon.svg"
-    property color btnColorDefault: "#c1c5cd"
-    property color btnColorMouseOver: "#47bac1"
-    property color btnColorMouseClicked: "#6CDFC2"
+    property url btnIconSource: "../../images/svg_images/minimizee_icon.svg"
+    property color btnColorDefault: "#ffffff"
+    property color btnColorMouseOver: "#6CDFC2"
+    property color btnColorMouseClicked: "#76cd46"
 
     QtObject{
         id: internal
@@ -39,7 +39,7 @@ Button{
         ColorOverlay {
             anchors.fill: iconBtn
             source: iconBtn
-            color: "#ffffff"
+            color: "#898d8f"
             antialiasing: false
         }
     }
