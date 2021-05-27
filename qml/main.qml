@@ -7,10 +7,10 @@ import "controls"
 Window {
     flags: Qt.Window | Qt.FramelessWindowHint
     id: window
-    width: 1100
-    height: 650
-    minimumWidth: 700
-    minimumHeight: 500
+    width: 1150
+    height: 670
+    minimumWidth: 1100
+    minimumHeight: 650
     visible: true
     color: "#00000000"
     title: qsTr("Hello World")
@@ -19,6 +19,7 @@ Window {
 
     property int windowStatus: 0
     property int windowMargin: 10
+
 
 
     //functions
@@ -65,7 +66,7 @@ Window {
     }
 
     Rectangle {
-        id: rectangle
+        id: bg
         color: "#55aaff"
         border.color: "#201c1c"
         border.width: 1
@@ -89,8 +90,8 @@ Window {
 
             Rectangle {
                 id: topbar
-                height: 60
-                color: "#f5f9fc"
+                height: 54
+                color: "#fefefe"
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -102,7 +103,9 @@ Window {
                     id: menuBtn
                     onClicked: animationMenu.running=true
 
+
                 }
+
 
                 Row {
                     id: rowBtns
@@ -116,7 +119,7 @@ Window {
 
                     TopBarButton {
                         id: btnMinimize
-                        btnIconSource: "../images/svg_images/minimize_icon.svg"
+                        btnIconSource: "../images/svg_images/minimizee_icon.svg"
                         onClicked:{
                             window.showMinimized()
                             internal.restoreMinimizeMargins()
@@ -125,13 +128,13 @@ Window {
 
                     TopBarButton {
                         id: btnMaximize
-                        btnIconSource: "../images/svg_images/maximize_icon.svg"
+                        btnIconSource: "../images/svg_images/maximizee_icon.svg"
                         onClicked: internal.restoreMax()
                     }
 
                     TopBarButton {
                         id: btnClose
-                        btnIconSource: "../images/svg_images/close_icon.svg"
+                        btnIconSource: "../images/svg_images/closee_icon.svg"
                         onClicked: window.close()
                     }
                 }
@@ -150,7 +153,7 @@ Window {
                 Rectangle {
                     id: leftMenu
                     width: 70
-                    color: "#354052"
+                    color: "#ffffff"
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
@@ -162,12 +165,20 @@ Window {
                         id: animationMenu
                         target: leftMenu
                         properties: "width"
-                        to: if(leftMenu.width==70) return 210;
-                            else return 70
+                        to:{ if(leftMenu.width==70) return 190;
+                            else return 70;
+                        }
                         duration: 500
                         easing.type: Easing.InOutQuint
                     }
-
+                    PropertyAnimation{
+                        id: animationMenuToZero
+                        target: leftMenu
+                        properties: "width"
+                        to: leftMenu.width == 70
+                        duration: 500
+                        easing.type: Easing.InOutQuint
+                    }
                     Column {
                         id: column
                         width: 37
@@ -184,7 +195,7 @@ Window {
                         LeftMenuBtn {
                             id: btnHome
                             width: leftMenu.width
-                            text: qsTr("Home")
+                            text: qsTr("Acceuil")
                             font.letterSpacing: 1.3
                             btnIconSource: "../images/svg_images/home_icon.svg"
                             font.weight: Font.Medium
@@ -196,18 +207,18 @@ Window {
                             font.family: "Verdana"
                             isActiveMenu: true
                             onClicked: {
+                                animationGraphMenuToZero.running = true  
                                 btnHome.isActiveMenu=true
                                 btnSettings.isActiveMenu=false
                                 stackView.push(Qt.resolvedUrl("pages/Home.qml"))
-                                //                                pageView.setSource(Qt.resolvedUrl("pages/Home.qml"))
-
-                            }
+                                                        
+                        }
                         }
 
                         LeftMenuBtn {
                             id: btnOpen
                             width: leftMenu.width
-                            text: qsTr("Open")
+                            text: qsTr("Ouvrir")
                             font.letterSpacing: 1.3
                             font.weight: Font.Medium
                             font.pointSize: 10
@@ -215,14 +226,19 @@ Window {
                             font.capitalization: Font.Capitalize
                             iconWidth: 19
                             iconHeight: 19
-                            btnIconSource: "../images/svg_images/open_icon.svg"
+                            btnIconSource: "../images/svg_images/edit_icon.svg"
                             autoRepeat: false
+                            onClicked: {
+
+                                animationGraphMenu.running=true
+                                //                                pageView.setSource(Qt.resolvedUrl("pages/Home.qml")
+                            }
                         }
 
                         LeftMenuBtn {
                             id: btnSave
                             width: leftMenu.width
-                            text: qsTr("Save")
+                            text: qsTr("Sauvegarder")
                             font.letterSpacing: 1.3
                             font.weight: Font.Medium
                             font.capitalization: Font.Capitalize
@@ -231,6 +247,7 @@ Window {
                             iconWidth: 19
                             iconHeight: 19
                             btnIconSource: "../images/svg_images/save_icon.svg"
+                            onClicked : { animationGraphMenuToZero.running = true  }
                         }
                     }
 
@@ -238,6 +255,8 @@ Window {
                         id: btnSettings
                         x: 0
                         y: 323
+                        visible: false
+
                         width: leftMenu.width
                         text: qsTr("Settings")
                         anchors.bottom: parent.bottom
@@ -252,6 +271,7 @@ Window {
                         anchors.bottomMargin: 25
                         btnIconSource: "../images/svg_images/settings_icon.svg"
                         onClicked: {
+                            animationGraphMenuToZero.running = true                       
                             btnHome.isActiveMenu=false
                             btnSettings.isActiveMenu=true
                             stackView.push(Qt.resolvedUrl("pages/Settings.qml"))
@@ -261,20 +281,143 @@ Window {
                 }
 
                 Rectangle {
-                    id: contentPages
+                    id: graphMenu
+                    z:1
+                    width: 0
+                    color: "#ffffff"
                     anchors.left: leftMenu.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.topMargin: 0
+
+                    PropertyAnimation{
+                        id: animationGraphMenu
+                        target: graphMenu
+                        properties: "width"
+                        to: {if(graphMenu.width==0) return 235;
+                            else return 0}
+                        duration: 400
+                        easing.type: Easing.InOutQuint
+                    }
+                    
+                    PropertyAnimation{
+                        id: animationGraphMenuToZero
+                        target: graphMenu
+                        properties: "width"
+                        to: graphMenu.width == 0
+                        duration: 400
+                        easing.type: Easing.InOutQuint
+                    }
+
+                    Column {
+                        id: columnGraphMenu
+                        width: 0
+                        height: 309
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
+                        clip: true
+
+                        GraphMenuBtn {
+                            id: btnNormalGraph
+                            width: graphMenu.width
+                            text: qsTr("Graphe")
+                            font.letterSpacing: 1.3
+                            clip: true
+                            font.weight: Font.Medium
+                            font.capitalization: Font.Capitalize
+                            font.bold: false
+                            font.pointSize: 10
+                            font.family: "Verdana"
+                            onClicked: {
+                                stackView.push(Qt.resolvedUrl("pages/HomeGraph.qml"))
+                                animationGraphMenuToZero.running = true  
+                            }
+                        }
+
+
+                        GraphMenuBtn {
+                            id: btnOrientedGraph
+                            width: graphMenu.width
+                            text: qsTr("Graph Orienté")
+                            font.letterSpacing: 1.3
+                            font.weight: Font.Medium
+                            font.pointSize: 10
+                            font.family: "Verdana"
+                            font.capitalization: Font.Capitalize
+                            onClicked: {
+                                animationGraphMenuToZero.running = true  
+                                stackView.push(Qt.resolvedUrl("pages/HomeGrapheOri.qml"))
+                            }
+                        }
+
+                        GraphMenuBtn {
+                            id: btnNormalGraphWeight
+                            width: graphMenu.width
+                            text: qsTr("Graph pondéré")
+                            font.letterSpacing: 1.3
+                            font.weight: Font.Medium
+                            font.capitalization: Font.Capitalize
+                            font.pointSize: 10
+                            font.family: "Verdana"
+                            onClicked: {
+                                animationGraphMenuToZero.running = true  
+                                stackView.push(Qt.resolvedUrl("pages/GraphPondere.qml"))
+                            }
+                        }
+
+                        GraphMenuBtn {
+                            id: btnOrientedGraphWeight
+                            width: graphMenu.width
+                            text: qsTr("Graphe orienté pondéré")
+                            font.letterSpacing: 1.3
+                            font.weight: Font.Medium
+                            font.capitalization: Font.Capitalize
+                            font.pointSize: 10
+                            font.family: "Verdana"
+                            onClicked: {
+                                animationGraphMenuToZero.running = true  
+                                stackView.push(Qt.resolvedUrl("pages/GraphOriPondere.qml"))
+                            }
+                        }
+
+                        Button {
+                            id: button
+                            width: 1
+                            height: 500
+                            visible: true
+                            text: qsTr("Button")
+                            background: Rectangle {
+                                color: "#87C1E3"
+                             }
+                        }
+                    }
+
+                }
+
+                Rectangle {
+                    id: contentPages
+                    anchors.left: graphMenu.right
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     clip: true
                     anchors.rightMargin: 0
                     anchors.leftMargin: 0
-                    anchors.bottomMargin: 25
+                    anchors.bottomMargin: 0
                     anchors.topMargin: 0
 
                     StackView {
                         id: stackView
                         anchors.fill: parent
+                        anchors.bottomMargin: 0
                         initialItem: Qt.resolvedUrl("pages/Home.qml")
                     }
                     //                    Loader{
@@ -285,70 +428,40 @@ Window {
 
                 }
 
-                Rectangle {
-                    id: rectangle1
-                    color: "#c7c7c7"
-                    anchors.left: leftMenu.right
+                MouseArea {
+                    id: mouseArea
+                    x: 1053
+                    y: 543
+                    width: 25
+                    height: 25
+                    opacity: 0.5
                     anchors.right: parent.right
-                    anchors.top: contentPages.bottom
                     anchors.bottom: parent.bottom
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 0
                     anchors.bottomMargin: 0
-                    anchors.topMargin: 0
+                    anchors.rightMargin: 0
+                    cursorShape: Qt.SizeFDiagCursor
+                    DragHandler {
+                        target: null
+                        onActiveChanged: if(active){
+                                             window.startSystemResize(Qt.RightEdge | Qt.BottomEdge)
+                                         }
+                    }
 
-                    Label {
-                        id: labelBotInfo1
-                        width: 639
-                        height: 17
-                        text: qsTr("Appliication Description")
+                    Image {
+                        id: image
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        verticalAlignment: Text.AlignVCenter
-                        anchors.topMargin: 0
-                        anchors.rightMargin: 30
-                        font.pointSize: 10
-                        anchors.bottomMargin: 0
-                        anchors.leftMargin: 10
-                    }
-
-                    MouseArea {
-                        id: mouseArea
-                        x: 883
-                        y: -25
-                        width: 25
-                        height: 25
-                        opacity: 0.5
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
+                        source: "../images/svg_images/resize_icon.svg"
+                        anchors.leftMargin: 5
+                        anchors.topMargin: 5
+                        sourceSize.height: 16
+                        sourceSize.width: 16
                         anchors.bottomMargin: 0
                         anchors.rightMargin: 0
-                        cursorShape: Qt.SizeFDiagCursor
-                        DragHandler {
-                            target: null
-                            onActiveChanged: if(active){
-                                                 window.startSystemResize(Qt.RightEdge | Qt.BottomEdge)
-                                             }
-                        }
-
-                        Image {
-                            id: image
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            source: "../images/svg_images/resize_icon.svg"
-                            anchors.leftMargin: 5
-                            anchors.topMargin: 5
-                            sourceSize.height: 16
-                            sourceSize.width: 16
-                            anchors.bottomMargin: 0
-                            anchors.rightMargin: 0
-                            fillMode: Image.PreserveAspectFit
-                            antialiasing: false
-                        }
+                        fillMode: Image.PreserveAspectFit
+                        antialiasing: false
                     }
                 }
             }
@@ -358,9 +471,9 @@ Window {
         anchors.fill: bg
         horizontalOffset: 0
         verticalOffset: 0
-        radius: 10
+        radius: 5
         samples: 16
-        color: "#ec2020"
+        color: "#9BA7B0"
         source: bg
         z: 0
     }
@@ -431,6 +544,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.66}
+    D{i:0;formeditorZoom:0.66}D{i:12;invisible:true}D{i:32;invisible:true}
 }
 ##^##*/
