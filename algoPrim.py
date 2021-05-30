@@ -8,9 +8,7 @@ class Graph:
         self.G = nx.Graph()         
         self.edgesDict = {}
         self.addEdges()
-        self.olddict = {}
         self.thisdict = {}
-        self.existKeys = []
         self.visited= []
         self.unvisited = list(self.G.nodes)
         self.index=int(input("Entrer l'index source "))
@@ -61,7 +59,6 @@ class Graph:
 
     def prim(self,s):
         print("--------------------------------------------------------------------------------------------------------")
-        self.olddict = self.thisdict
         self.visited.append(s)
         weightOld = sys.maxsize
         for j in self.visited:
