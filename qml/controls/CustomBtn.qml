@@ -13,6 +13,7 @@ Button {
     property color colorPressed: "#55aaff"
     property color textColorHover: "#000000"
     property color textColorDefault: "#ffffff"
+
     implicitWidth: 120
     implicitHeight: 95
 

@@ -39,7 +39,7 @@ Button{
     }
 
 
-    implicitWidth: 145
+    implicitWidth: 130
     implicitHeight: 30       
     background: Rectangle {
         id: bgBtn
@@ -52,12 +52,10 @@ Button{
         id: content
         Text {
             color : internal.dynamicColorText
-           // color: "#acb8fe"
             text: addBtn.text
             font: addBtn.font
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 

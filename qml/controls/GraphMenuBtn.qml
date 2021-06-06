@@ -7,15 +7,14 @@ Button{
     text: qsTr('Graph Menu Text')
 
     // property
-    property url btnIconSource: "../../images/svg_images/right_icon.svg"
+    property url btnIconSource: "../../images/svg_images/leftClick_icon.svg"
     property color btnColorDefault: "#ffffff"
-    property color btnColorMouseOver: "#47bac1"
+    property color btnColorMouseOver: "#a1d0db"
     property color btnColorMouseClicked: "#6CDFC2"
-    property color activeMenuColorRight: "#D4D9DC"
-    property color activeMenuColorLeft: "#87C1E3"
     property color textColorHover: "#ffffff"
     property color textColorDefault: "#898d8f"
-    property bool isActiveMenu: false
+    property bool isActive: false
+
     property int iconWidth: 17
     property int iconHeight: 17
 
@@ -41,14 +40,38 @@ Button{
         color: internal.dynamicColor
         Rectangle{
             anchors{
-                top: parent.top
+                right: parent.right
                 left: parent.left
                 bottom: parent.bottom
             }
+            height: 1
+            visible: true
+            color: "#9cc0c9"
+            opacity: 0.3
+        }
+        Rectangle{
+            anchors{
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+            }
             width: 1
-            color: activeMenuColorLeft
+            visible: true
+            color: "#9cc0c9"
+            opacity: 0.3
+        }
+        Rectangle{
+            anchors{
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+            }
+            width: 3
+            visible: isActive
+            color: "#add8e6"
         }
        }
+       
     contentItem: Item {
         anchors.fill: parent
         id: content
@@ -56,7 +79,7 @@ Button{
             id: iconBtn
             source: btnIconSource
             anchors.right: parent.right
-            anchors.rightMargin: 14
+            anchors.rightMargin: 11
             sourceSize.width: iconWidth
             sourceSize.height: iconHeight
             width: iconWidth

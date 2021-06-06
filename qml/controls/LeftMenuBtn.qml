@@ -10,11 +10,11 @@ Button{
     property url btnIconSource: "../../images/svg_images/home_icon.svg"
     property color btnColorDefault: "#ffffff"
     property color btnColorMouseOver: "#a5cae2"
-    property color btnColorMouseClicked: "#387ead"
+    property color btnColorMouseClicked: "#86F0E3"
     property int iconWidth: 18
     property int iconHeight: 18
-    property color activeMenuColorLeft: "#2d8ecd"
- //   property color activeMenuColorRight: "#64e241"
+    property color activeMenuColorLeft: "#add8e6"
+    property color activeMenuColorRight: "#f4f8f9"
     property bool isActiveMenu: false
 
     QtObject{
@@ -43,18 +43,18 @@ Button{
             visible: isActiveMenu
             color: activeMenuColorLeft
         }
-        // Rectangle{
-        //     anchors{
-        //         top: parent.top
-        //         right: parent.right
-        //         bottom: parent.bottom
-        //     }
-        //     width: 3
-        //     visible: isActiveMenu
-        //     color: activeMenuColorRight
-        // }
+        Rectangle{
+            anchors{
+                top: parent.top
+                right: parent.right
+                bottom: parent.bottom
+            }
+            width: 5
+            visible: isActiveMenu
+            color: activeMenuColorRight
+        }
        }
-    contentItem: Item {
+        contentItem: Item {
         anchors.fill: parent
         id: content
         Image {
