@@ -11,7 +11,6 @@ Item {
     property var newobj2: null
     property url getImageSource: "../../graph/path.jpg"
     property url setSourceGraphImg: "../../graph/graphImg.jpg"
- 
 
     QtObject{
         id: internal
@@ -61,22 +60,28 @@ Item {
             anchors.bottomMargin: 20
             anchors.rightMargin: 8
             anchors.leftMargin: 22
-
             clip: true
 
             GridLayout {
                 id: gridLayoutBottom
-                anchors.fill: parent
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.topMargin: 0
                 columns: 100
+                anchors.leftMargin: 0
+                anchors.rightMargin: 0
                 columnSpacing: 10
                 rows: 0
                 //  visible : false
+
                 CustomBtn {
                     text: "Créer un Graphe"
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:{
-                        stackView.push(Qt.resolvedUrl("Graphe.qml"))
+                        stackView.push(Qt.resolvedUrl("GraphPondere.qml"))
                     }
                 }
 
@@ -85,11 +90,11 @@ Item {
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:{
-                        backend.drawGraph()
+                        backend.drawWeightedGraph()
                         stackView.replace("btnPages/DrawGraph.qml")
+
                     }
                 }
-
 
                 CustomBtn{
                     text: "Voisinage"
@@ -98,8 +103,41 @@ Item {
                     onClicked:{
                         backend.drawGraph()
                         stackView.replace("btnPages/Voisinage.qml")
-                        //stackView.push(Qt.resolvedUrl("btnPages/Voisinage.qml"))
+
                     }
+                }
+
+                CustomBtn{
+                    text: "Algorithm Prim"
+                    font.pointSize: 9
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    onClicked: { 
+                            backend.drawWeightedGraph()
+                            stackView.replace("btnPages/AlgoPrim.qml")
+
+                }
+                }
+
+                CustomBtn{
+                    text: "Algorithm Djikstra"
+                    font.pointSize: 9
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    onClicked: {
+                            backend.drawWeightedGraph()
+                            stackView.replace("btnPages/AlgoDjikstra.qml")
+
+                            }
+                }
+
+                CustomBtn{
+                    text: "Algorithm Kruskal"
+                    font.pointSize: 9
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    onClicked: {
+                        backend.drawWeightedGraph()
+                        stackView.replace("btnPages/AlgoKruskal.qml")
+
+                        }
                 }
 
                 CustomBtn{
@@ -107,13 +145,16 @@ Item {
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:  stackView.replace("btnPages/DegreeGraphe.qml")
+
                 }
+
 
                 CustomBtn{
                     text: "Nombre de sommet "
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:  stackView.replace("btnPages/NodesNumber.qml")
+                    
                 }
 
                 CustomBtn{
@@ -122,14 +163,15 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:  stackView.replace("btnPages/MatriceAdjGraphe.qml")
                 }
-
             }
 
         }
 
         Label {
             id: btnChooseLabel
+            y: 420
             width: 737
+            height: 22
             text: qsTr("")
             anchors.left: parent.left
             anchors.bottom: flickable.top
@@ -164,7 +206,7 @@ Item {
                     duration: 70
                 }
             }
-            initialItem: ("Graphe.qml")
+            initialItem: Qt.resolvedUrl("GraphPondere.qml")
 
         }
 
@@ -181,9 +223,3 @@ Item {
 
 
 
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.5;height:480;width:640}D{i:3}
-}
-##^##*/

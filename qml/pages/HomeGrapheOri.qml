@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import QtQuick.Layouts 1.11
-import "componentCreation.js" as MyScript
 import "../controls"
 
 Item {
@@ -65,7 +64,6 @@ Item {
 
             GridLayout {
                 id: gridLayoutBottom
-                anchors.right:btnRight.right
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -78,11 +76,11 @@ Item {
                 rows: 0
                 //  visible : false
                 CustomBtn {
-                    text: "Graphe"
+                    text: "Créer un Graphe"
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:{
-                        stackView.push(Qt.resolvedUrl("Graphe.qml"))
+                        stackView.push(Qt.resolvedUrl("GraphOriente.qml"))
                     }
                 }
 
@@ -92,49 +90,31 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     onClicked:{
                         backend.drawDirectedGraph()
-                        stackView.push(Qt.resolvedUrl("btnPages/DrawGraph.qml"))
+                        stackView.replace("btnPages/DrawGraph.qml")
                     }
-                }
-
-                CustomBtn{
-                    text: "Algorithm Prim"
-                    font.pointSize: 9
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: nodesView.push("pages/pageNoInternet.qml")
-                }
-
-                CustomBtn{
-                    text: "Algorithm Djikstra"
-                    font.pointSize: 9
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: nodesView.push("pages/pageNoInternet.qml")
-                }
-
-                CustomBtn{
-                    text: "Algorithm Kruskal"
-                    font.pointSize: 9
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: nodesView.push("pages/pageNoInternet.qml")
                 }
 
                 CustomBtn{
                     text: "Successeur"
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: stackView.push(Qt.resolvedUrl("btnPages/Successeur.qml"))
+                    onClicked:  stackView.replace("btnPages/Successeur.qml")
+
                 }
                 CustomBtn{
                     text: "Prédécesseur"
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: stackView.push(Qt.resolvedUrl("btnPages/Predecesseur.qml"))
+                    onClicked:  stackView.replace("btnPages/Predecesseur.qml")
+
                 }
 
                 CustomBtn{
                     text: "Degré"
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: stackView.push(Qt.resolvedUrl("btnPages/Degree.qml"))
+                    onClicked:  stackView.replace("btnPages/Degree.qml")
+
                 }
 
 
@@ -142,23 +122,22 @@ Item {
                     text: "Nombre de sommet "
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: nodesView.push("pages/pageNoInternet.qml")
+                    onClicked:  {
+                                backend.drawDirectedGraph()
+                                stackView.replace("btnPages/NodesCountDi.qml")
+                   }
                 }
 
                 CustomBtn{
                     text: "Matrice d'adjacence "
                     font.pointSize: 9
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: nodesView.push("pages/pageNoInternet.qml")
+                    onClicked:  {                        
+                    backend.drawDirectedGraph()
+                    stackView.replace("btnPages/MatriceAdj.qml")
+                    }
                 }
 
-                CustomBtn{
-                    id:btnRight
-                    text: "Matrice d'incidence "
-                    font.pointSize: 9
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    onClicked: nodesView.push("pages/pageNoInternet.qml")
-                }
             }
 
         }
@@ -168,7 +147,7 @@ Item {
             y: 420
             width: 737
             height: 22
-            text: qsTr("Lorem fezo ifep oakg maf [ btn choix ]")
+            text: qsTr("")
             anchors.left: parent.left
             anchors.bottom: flickable.top
             anchors.leftMargin: 36
@@ -185,6 +164,23 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 180
+            replaceEnter: Transition {
+                PropertyAnimation{
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 120
+                }
+            }
+
+            replaceExit: Transition {
+                PropertyAnimation{
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 70
+                }
+            }
             initialItem: Qt.resolvedUrl("GraphOriente.qml")
 
         }

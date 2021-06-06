@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import QtQuick.Layouts 1.11
-import "componentCreation.js" as MyScript
 import "../controls"
 
 Item {
@@ -27,6 +26,7 @@ Item {
             btnChooseLabel.visible = true
         }
         function addNodes(){
+            backend.renitiliserGraphe()
             var myText=1;
             for(var i=0;i<sommetInfo1.text;++i){
                 var newNodeInput= Qt.createQmlObject(
@@ -112,13 +112,13 @@ Item {
                 NumberAnimation {
                     target: sommetInfo1
                     properties: "y"
-                    to: 101
+                    to: 110
                     duration: 60
                 }
                 NumberAnimation {
                     target: sommetInfo1
                     properties: "y"
-                    to: 91
+                    to: 100
                     duration: 50
                 }
             }
@@ -137,13 +137,13 @@ Item {
                     target: sommetInfo1
                     properties: "y"
                     to: 15
-                    duration: root.duration*0.8
+                    duration: 250
                 }
                 NumberAnimation {
                     target: sommetInfo1
                     properties: "x"
                     to: 385
-                    duration: root.duration*0.6
+                    duration: 350
                 }
             }
 
@@ -153,6 +153,7 @@ Item {
                 width:70
                 x: 17
                 y: 100
+                validator: IntValidator {bottom: 1; top: 150}
                 background: Rectangle {
                     radius: 5
                     implicitWidth: 70
@@ -162,32 +163,17 @@ Item {
                 }
             }
 
-            CustomAddBtn {
-                id: saveNode
-                x: 367
-                y: 218
-                width: 56
-                height: 30
-                text: qsTr("Save")
-                clip: true
-                onClicked:{
-                    console.log(sommetInfo.text)
-                    console.log(sommetInfo1.text)
-                    console.log(newtext.text)
-                }
-            }
 
             CustomAddBtn {
                 id: addNode
-                x: 207
-                y: 218
-                text: qsTr("Ajouter sommet")
+                x: 292
+                y: 220
+                text: qsTr("Créer les sommets")
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 15
+                anchors.rightMargin: 20
                 z:1
-
-                MouseArea {
-                    x: -207
-                    y: -218
-                    anchors.fill: parent
                     onClicked: {
                         if (sommetInfo1.text===""){
                             nodeEmptyInputWarn.running = true;
@@ -210,12 +196,13 @@ Item {
                             inBorderColor = "#80ff80"
                             sommetInfo1.readOnly= true
                             nodeEmptyInputValid.running = true
+                            var warnLabel= Qt.createQmlObject(
+                                'import QtQuick.Controls 2.15;Label {id: labelEmptyText;x: 17;y: 73;width: 192;height: 14;color: "#1aff1a";text: qsTr("Les sommets sont ajoutés avec succès");font.pointSize: 10}'
+                                ,rectangle1, "dynamicSnippet1");
+                            warnLabel.destroy(1000);
                         }
-                        //backend.getSommetText(newtext.text)
-                    }
+                        
                 }
-                //addNode.disableProperty().bind(Bindings.isEmpty(sommetInfo1.textProperty()));
-                //btnIconSource: "../../images/svg_images/add_icon.svg"
 
             }
         }
@@ -291,6 +278,7 @@ Item {
                 x: 17
                 y: 98
                 placeholderText: qsTr("De")
+                validator: IntValidator {bottom: 1; top: 1500}
                 background: Rectangle {
                     radius: 5
                     implicitWidth: 70
@@ -306,6 +294,8 @@ Item {
                 x: 127
                 y: 98
                 placeholderText: qsTr("A")
+                validator: IntValidator {bottom: 1; top: 1500}
+
                 background: Rectangle {
                     radius: 5
                     implicitWidth: 70
@@ -321,15 +311,13 @@ Item {
                     target: customEdgeTextDe
                     properties: "x"
                     to: 100
-                    // 60% of time to travel up
-                    duration: root.duration*0.6
+                    duration: 200
                 }
                 NumberAnimation {
                     target: customEdgeTextDe
                     properties: "x"
                     to: 17
-                    // 40% of time to travel sideways
-                    duration: root.duration*0.4
+                    duration: 230
                 }
             }
             SequentialAnimation {
@@ -338,15 +326,13 @@ Item {
                     target: customEdgeTextA
                     properties: "x"
                     to: 220
-                    // 60% of time to travel up
-                    duration: root.duration*0.6
+                    duration: 200
                 }
                 NumberAnimation {
                     target: customEdgeTextA
                     properties: "x"
                     to: 127
-                    // 40% of time to travel sideways
-                    duration: root.duration*0.4
+                    duration: 230
                 }
             }
             SequentialAnimation {
@@ -380,35 +366,20 @@ Item {
                 }
             }
 
-            CustomAddBtn {
-                id: saveEdge
-                x: 390
-                y: 218
-                width: 56
-                height: 30
-                text: qsTr("Save")
-                clip: true
-                onClicked:{
-                    console.log(newobj1.text)
-                    console.log(newobj2.text)
-                }
-            }
+
 
             CustomAddBtn {
                 id: addEdge1
                 x: 217
                 y: 218
-                text: qsTr(" Ajouter un chemin")
+                text: qsTr(" Créer un chemin")
                 anchors.right: parent.right
-                anchors.rightMargin: 82
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 20
+                anchors.rightMargin: 15
                 btnIconSource: "../../images/svg_images/add_icon.svg"
                 clip: true
 
-                MouseArea {
-                    x: -188
-                    y: -218
-
-                    anchors.fill: parent
                     onClicked: {
                         if (customEdgeTextDe.text===""||customEdgeTextA.text===""){
                             animWarning.running = true
@@ -419,21 +390,20 @@ Item {
                                         'import QtQuick.Controls 2.15;Label {id: labelEmptyText;x: 17;y: 75;width: 192;height: 14;color: "#fa3030";text: qsTr("Remplir les cases vides");font.pointSize: 10}'
                                         ,rectangle2, "dynamicSnippet1");
                             warnLabel.destroy(1000);}
+                        else if (customEdgeTextDe.text===customEdgeTextA.text) {
+                            animWarning.running = true
+                            animWarning1.running = true
+                            inBorderColorEdge= "#ff6666"
+                            inBorderColorEdge= "#ff6666"
+                            var warnLabel= Qt.createQmlObject(
+                                        'import QtQuick.Controls 2.15;Label {id: labelEmptyText;x: 17;y: 75;width: 192;height: 14;color: "#fa3030";text: qsTr("Veuillez entrer deux sommets différent");font.pointSize: 10}'
+                                        ,rectangle2, "dynamicSnippet1");
+                            warnLabel.destroy(1000);                            
+                        }
                         else {
                             backend.checkIfExist(customEdgeTextDe.text,customEdgeTextA.text)}
-                        //animWarning.running = true
-                        // }else if(backend.checkIfExist(customEdgeTextDe.text)){
-                        //         anim.running = true
-                        //         anim1.running = true
-                        //         customEdgeTextDe.text = ""
-                        //         customEdgeTextDe.text = ""
-                        // }   else{
-                        //     console.log('This',backend.checkIfExist(customEdgeTextDe.text))
-                        //     animWarning.running = true
-                        //     animWarning1.running = true}
-                        //backend.getEdge(cheminInfo3.text,cheminInfo4.text)
-                    }
                 }
+                
             }
 
 
@@ -513,7 +483,21 @@ Item {
                 inBorderColorEdge= "#80ff80"
                 customEdgeTextDe.text = "";
                 customEdgeTextA.text = "";
-            }else if (val === "False"){
+                var warnLabel= Qt.createQmlObject(
+                        'import QtQuick.Controls 2.15;Label {id: labelEmptyText;x: 17;y: 75;width: 192;height: 14;color: "#1aff1a";text: qsTr("Chemin ajouté avec succès");font.pointSize: 10}'
+                        ,rectangle2, "dynamicSnippet1");
+                warnLabel.destroy(1000);
+            }else if (val === "edgeExist"){
+                var warnLabel= Qt.createQmlObject(
+                            'import QtQuick.Controls 2.15;Label {id: labelEmptyText;x: 17;y: 75;width: 192;height: 14;color: "#fa3030";text: qsTr("Chemin existe déja ");font.pointSize: 10}'
+                            ,rectangle2, "dynamicSnippet1");
+                warnLabel.destroy(1000);
+                inBorderColorEdge= "#ff6666"
+                inBorderColorEdge= "#ff6666"
+                animWarning.running = true;
+                animWarning1.running = true
+            }
+            else if (val === "False"){
                 var warnLabel= Qt.createQmlObject(
                             'import QtQuick.Controls 2.15;Label {id: labelEmptyText;x: 17;y: 75;width: 192;height: 14;color: "#fa3030";text: qsTr("Veuillez Entrer un chemin valide");font.pointSize: 10}'
                             ,rectangle2, "dynamicSnippet1");
@@ -542,7 +526,7 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.5;height:480;width:640}D{i:4}D{i:13}D{i:3}D{i:22}
-D{i:23}D{i:25}D{i:39}D{i:40}D{i:21}D{i:42;invisible:true}D{i:43;invisible:true}
+    D{i:0;autoSize:true;formeditorZoom:0.5;height:480;width:640}D{i:38;invisible:true}
+D{i:39;invisible:true}D{i:42;invisible:true}D{i:43;invisible:true}
 }
 ##^##*/
