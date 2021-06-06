@@ -11,11 +11,12 @@ Item {
         z:1
         Image {
             id: graphImg
+            cache:false
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            source: "../../../graphImg/graphImg.png"
+            source: "../../../graphe_images/graphImg.png"
             anchors.leftMargin: 198
             anchors.rightMargin: 196
             anchors.topMargin: 34
@@ -29,7 +30,15 @@ Item {
                 z: -1
                 border.width: 1
             } 
+            function reloadImage() {
+                var oldSource = source
+                source = ""
+                source = oldSource
+            }
+            
+            
         }
+        Component.onCompleted: graphImg.reloadImage()        
     }
 }
 

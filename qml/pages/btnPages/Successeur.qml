@@ -100,7 +100,7 @@ Item {
                                     ,succesorContainer, "dynamicSnippet1");
                         warnLabel.destroy(1000);}
                     else {
-                        backend.checkNodeExist(succesorInput.text)}
+                        backend.checkDirectedNodeExist(succesorInput.text)}
                 }
             }
 
