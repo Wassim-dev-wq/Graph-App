@@ -1,0 +1,14 @@
+<svg width="2" height="2" xmlns="http://www.w3.org/2000/svg">
+ <metadata id="metadata14">image/svg+xml</metadata>
+ <defs>
+  <pattern id="EMFhbasepattern" patternUnits="userSpaceOnUse" width="6" height="6" x="0" y="0"/>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path clip-rule="evenodd" fill="#666666" fill-rule="evenodd" stroke-width="0.333701" id="path842" d="m1.81982,0.85204l-0.7593,-0.62121c-0.02665,-0.02389 -0.05329,-0.03583 -0.09325,-0.03583c-0.02664,0 -0.06661,0.01194 -0.09325,0.03583l-0.69269,0.62121l-0.03997,0.03584l0,0.9318l0.67938,0l0,-0.58536l0.35967,0l0,0.58536l0.67937,0l0,-0.9318l-0.03996,-0.03584zm-0.85255,-0.54953c0,0 0,0 0,0c0,0 0,0 0,0zm0.77262,1.39771l-0.42627,0l0,-0.4659c0,-0.05973 -0.06661,-0.10752 -0.13321,-0.10752l-0.35967,0c-0.06661,0 -0.11989,0.04779 -0.11989,0.10752l0,0.4659l-0.4396,0l0,-0.76456l0.70602,-0.63315c0,0 0,0 0,0l0.77262,0.63315l0,0.76456z"/>
+ </g>
+</svg>
